@@ -8,6 +8,7 @@ var indexRouter = require("./routes/index");
 var todosRouter = require("./routes/todos");
 var loginRouter = require("./routes/login");
 var postsRouter = require("./routes/posts");
+var commentsRouter = require("./routes/comments");
 var app = express();
 
 app.use(cors());
@@ -21,4 +22,5 @@ app.use("/", indexRouter);
 app.use("/todos", todosRouter);
 app.use("/login", loginRouter);
 app.use("/posts", postsRouter);
+app.use("/comments", commentsRouter);
 module.exports = app;

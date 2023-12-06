@@ -72,7 +72,7 @@ router.put("/:user_id/:post_id", async function (req, res, next) {
   if (data) {
     return res.send(data[1][0]);
   }
-  return res.status(404).send("ERROR MODIFIYING POST");
+  return res.status(404).send("ERROR MODIFYING POST");
 });
 
 router.get("/:postId", async function (req, res, next) {
@@ -84,4 +84,11 @@ router.get("/:postId", async function (req, res, next) {
   return res.status(404).send("ERROR READING POST DATA");
 });
 
+router.delete("/:postId", async function (req, res, next) {
+  let data = await dbUtils.deleteUserData("posts", req.params.postId);
+  if (data) {
+    return res.send({});
+  }
+  return res.status(404).send("ERROR DELETING POST");
+});
 module.exports = router;
