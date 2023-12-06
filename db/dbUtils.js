@@ -10,6 +10,7 @@ var con = mysql.createConnection({
 
 const todoValues = "(user_id, content)";
 const postValues = "(user_id, title, content)";
+const commentValues = "(user_id, content, post_id)";
 
 function executeQuery(sql, values = []) {
   return new Promise((resolve, reject) => {
@@ -39,7 +40,12 @@ function getTableRange(table, from, to) {
 }
 
 function postUserData(table, values) {
-  const insertValues = table === "todos" ? todoValues : postValues;
+  const insertValues =
+    table === "todos"
+      ? todoValues
+      : table === "posts"
+      ? postValues
+      : commentValues;
   const sql = `INSERT INTO FINAL_PROJ.${table} ${insertValues} VALUES (?) `;
   return executeQuery(sql, values);
 }
@@ -51,6 +57,11 @@ function updateUserData(table, field, value, userId, resourceId) {
   }
                WHERE user_id = ${userId} AND id = ${resourceId};
                SELECT * from ${table} WHERE id = ${resourceId};`;
+  return executeQuery(sql);
+}
+
+function deleteUserData(table, resourceId) {
+  const sql = `DELETE FROM ${table} WHERE id = ${parseInt(resourceId)}`;
   return executeQuery(sql);
 }
 
@@ -86,6 +97,7 @@ module.exports = {
   getUserData,
   postUserData,
   updateUserData,
+  deleteUserData,
   getUser,
   getRecordCount,
   getTableRange,
