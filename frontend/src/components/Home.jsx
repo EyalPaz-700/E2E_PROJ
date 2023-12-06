@@ -2,14 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const navigate = useNavigate();
-  // if (!JSON.parse(localStorage.getItem("loggedIn"))) {
-  //   navigate("../login");
-  // }
-  const currUser = localStorage.getItem("currUser");
+  const currUser = JSON.parse(localStorage.getItem("currUser"));
   return (
     <div>
-      <h6>hi {currUser.name}</h6>
+      <h6>hi {currUser.username}</h6>
     </div>
   );
 };

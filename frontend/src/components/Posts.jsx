@@ -1,20 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 const Posts = () => {
   const [range, setRange] = useState({ start: 0, end: 10 });
   const [posts, setPosts] = useState([]);
   let length;
   async function getPosts() {
-    try {
-      const headRes = await fetch(`http://localhost:3000/posts`, {
-        method: "HEAD",
-      });
-      if (!headRes.ok) {
-        throw "";
-      } else {
-        length = headRes.length;
-      }
-    } catch {}
+    // try {
+    //   const headRes = await fetch(`http://localhost:3000/posts`, {
+    //     method: "HEAD",
+    //   });
+    //   if (!headRes.ok) {
+    //     throw "";
+    //   } else {
+    //     length = headRes.length;
+    //   }
+    // } catch {}
     try {
       const response = await fetch(
         `http://localhost:3000/posts/?from=${range.start}&to=${range.end}`

@@ -10,7 +10,7 @@ const schema = Joi.object({
 
 const editSchema = Joi.object({
   content: Joi.string(),
-  status: Joi.string(),
+  status: Joi.boolean(),
   is_deleted: Joi.boolean(),
 }).xor("content", "status", "is_deleted");
 

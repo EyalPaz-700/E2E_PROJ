@@ -19,7 +19,7 @@ const Login = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          name: inputs.username,
+          username: inputs.username,
           password: inputs.password,
         }),
       };
@@ -38,7 +38,7 @@ const Login = () => {
           } else {
             localStorage.setItem("currUser", JSON.stringify(currUser));
             localStorage.setItem("loggedIn", "true");
-            navigate(`../users/${currUser.id}`);
+            navigate(`../users/${currUser.user_id}`);
           }
         }
       } catch (error) {
