@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 
-const Todo = ({ todo }) => {
+const Todo = ({ todo, removeSelf }) => {
   let { id } = useParams();
   const [todoStatus, setTodoStatus] = useState(todo.status === 1);
 
@@ -30,6 +30,7 @@ const Todo = ({ todo }) => {
       console.error(error, "");
     }
   }
+
   return (
     <>
       <label htmlFor={todo.id}>{todo.content}</label>
@@ -42,6 +43,7 @@ const Todo = ({ todo }) => {
           handleCheck(todo.id, todo.status);
         }}
       />
+      <button onClick={removeSelf}>Remove</button>
     </>
   );
 };

@@ -15,11 +15,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/users/:id" element={<Layout />}>
           <Route path="home" element={<Home />} />
-          <Route path="posts">
-            <Route index element={<Posts />} />
-            <Route path=":postId" element={<ChosenPost />} />
-          </Route>
           <Route path="todos" element={<Todos />} />
+        </Route>
+        <Route path="posts">
+          <Route index element={<Posts />} />
+          <Route path=":postId" element={<ChosenPost />} />
         </Route>
       </Routes>
     </BrowserRouter>
