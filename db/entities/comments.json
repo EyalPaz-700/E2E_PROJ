@@ -1,0 +1,25 @@
+{
+    "columns": [
+      {
+        "name": "id",
+        "type": "INT",
+        "PRIMARY KEY": true,
+        "AUTO_INCREMENT": true
+      },
+      {
+        "name": "user_id",
+        "type": "INT",
+        "NOT NULL": true
+      },
+      {
+        "name": "content",
+        "type": "VARCHAR(255)",
+        "NOT NULL": true
+      },
+      {
+        "name": "post_id",
+        "type": "INT",
+        "NOT NULL": true
+      }
+    ]
+  }

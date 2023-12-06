@@ -1,0 +1,15 @@
+{
+    "columns": [
+      {
+        "name": "id",
+        "type": "INT",
+        "PRIMARY KEY": true,
+        "AUTO_INCREMENT": true
+      },
+      {
+        "name": "username",
+        "type": "VARCHAR(255)",
+        "NOT NULL": true
+      }
+    ]
+  }
