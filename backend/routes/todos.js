@@ -33,6 +33,7 @@ router.post("/:userId", async function (req, res, next) {
   ]);
   if (data) {
     return res.send({
+      todo_id: data.insertId,
       ...req.body,
       is_deleted: false,
       status: false,
@@ -41,7 +42,7 @@ router.post("/:userId", async function (req, res, next) {
   return res.status(404).send("ERROR ADDING TODO");
 });
 
-router.put("/:userId/:commentId", async function (req, res, next) {
+router.put("/:userId/:todoId", async function (req, res, next) {
   const { error } = editSchema.validate(req.body);
   if (error) {
     return res
@@ -53,7 +54,7 @@ router.put("/:userId/:commentId", async function (req, res, next) {
     Object.keys(req.body)[0],
     Object.values(req.body)[0],
     req.params.userId,
-    req.params.commentId
+    req.params.todoId
   );
   if (data) {
     return res.send(data[1][0]);
