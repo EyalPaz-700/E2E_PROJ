@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import Post from "./Post";
 
 const Posts = () => {
-  const [range, setRange] = useState({ start: 0, end: 10 });
+  const [range, setRange] = useState({ start: 1, end: 10 });
   const [posts, setPosts] = useState([]);
   let length;
   async function getPosts() {
@@ -20,10 +21,10 @@ const Posts = () => {
         `http://localhost:3000/posts/?from=${range.start}&to=${range.end}`
       );
       if (!response.ok) {
-        throw "";
+        console.error("Error Fetching Posts");
       } else {
         const postsArr = await response.json();
-        console.log(postsArr);
+        console.log("posts ", postsArr);
         if (Object.keys(postsArr).length === 0) {
           ////message
         } else {
@@ -38,13 +39,9 @@ const Posts = () => {
 
   return (
     <>
-      {" "}
-      <h1>posts</h1>
-      <ul>
-        {posts.map((post) => (
-          <div key={post.id}></div>
-        ))}
-      </ul>
+      {posts.map((post) => (
+        <Post key={post.post_id} postData={post} />
+      ))}
     </>
   );
 };

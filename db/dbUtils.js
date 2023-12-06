@@ -34,8 +34,10 @@ function getUserData(table, userId) {
 
 function getTableRange(table, from, to) {
   const sql = `
-  SELECT * FROM FINAL_PROJ.${table} psts
-  WHERE psts.id BETWEEN ${from} AND ${to};`;
+  SELECT psts.id as post_id, psts.user_id, psts.title, usrs.id as user_id, usrs.username FROM FINAL_PROJ.${table} psts
+  JOIN FINAL_PROJ.users  usrs on psts.user_id = usrs.id
+  WHERE psts.id BETWEEN ${from} AND ${to}
+  ;`;
   return executeQuery(sql);
 }
 
@@ -75,11 +77,20 @@ function getUser(body) {
 }
 
 function getAllResourceData(postId) {
-  const sql = `SELECT cmnts.id as comment_id, cmnts.content as comment_content, cmnts.post_id, psts.content as post_content, psts.title as post_title, usrs.id as user_id, usrs.username FROM FINAL_PROJ.comments cmnts
-  JOIN FINAL_PROJ.posts psts
-  ON psts.id = cmnts.post_id
-  JOIN FINAL_PROJ.users usrs
-  ON cmnts.user_id = usrs.id
+  const sql = `SELECT 
+  cmnts.id AS comment_id, 
+  cmnts.content AS comment_content, 
+  cmnts.post_id, 
+  psts.content AS post_content, 
+  psts.title AS post_title, 
+  usrs.id AS user_id, 
+  usrs.username 
+FROM 
+  FINAL_PROJ.posts psts
+LEFT JOIN 
+  FINAL_PROJ.comments cmnts ON psts.id = cmnts.post_id
+LEFT JOIN 
+  FINAL_PROJ.users usrs ON cmnts.user_id = usrs.id 
   WHERE psts.id = ${postId};
   `;
   return executeQuery(sql);

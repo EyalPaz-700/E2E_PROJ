@@ -6,6 +6,26 @@ const Todos = () => {
   const [todos, setTodos] = useState([]);
   let { id } = useParams();
 
+  async function removeTodo(todoId, userId) {
+    const requestOptions = {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ is_deleted: true }),
+    };
+    let data = await fetch(
+      `http://localhost:3000/todos/${userId}/${todoId}`,
+      requestOptions
+    );
+    if (!data.ok) {
+      return console.error("DELETION FAILED");
+    }
+    setTodos((prev) => {
+      const copy = [...prev];
+      copy.find((todo) => todo.id === todoId).is_deleted = true;
+      return copy;
+    });
+  }
+
   async function getTodos() {
     try {
       const response = await fetch(`http://localhost:3000/todos/${id}`);
@@ -26,11 +46,17 @@ const Todos = () => {
     <>
       <h1>todos</h1>
       <ol>
-        {todos.map((todo) => (
-          <li key={todo.id}>
-            <Todo todo={todo} />
-          </li>
-        ))}
+        {todos.map(
+          (todo) =>
+            !todo.is_deleted && (
+              <li key={todo.id}>
+                <Todo
+                  removeSelf={() => removeTodo(todo.id, todo.user_id)}
+                  todo={todo}
+                />
+              </li>
+            )
+        )}
       </ol>
     </>
   );
