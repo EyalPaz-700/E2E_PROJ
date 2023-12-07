@@ -15,6 +15,7 @@ const commentValues = "(user_id, content, post_id)";
 function executeQuery(sql, values = []) {
   return new Promise((resolve, reject) => {
     con.query(sql, [values], function (err, result) {
+      console.log(sql);
       if (err) {
         console.error(err);
         reject(err);
@@ -29,6 +30,15 @@ function getUserData(table, userId) {
   const sql = `SELECT * FROM FINAL_PROJ.${table} WHERE user_id = ${parseInt(
     userId
   )}`;
+  return executeQuery(sql);
+}
+
+//we can write it in one function (in getUserData)
+function getSortedUserData(table, userId, sortField) {
+  //sortField should be id/content
+  const sql = `SELECT * FROM FINAL_PROJ.${table}
+  WHERE user_id = ${parseInt(userId)} 
+  ORDER BY ${sortField}`;
   return executeQuery(sql);
 }
 
@@ -105,6 +115,7 @@ function getRecordCount(table) {
 module.exports = {
   executeQuery,
   getUserData,
+  getSortedUserData,
   postUserData,
   updateUserData,
   deleteUserData,

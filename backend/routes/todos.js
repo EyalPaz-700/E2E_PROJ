@@ -15,12 +15,28 @@ const editSchema = Joi.object({
 }).xor("content", "status", "is_deleted");
 
 router.get("/:userId", async function (req, res, next) {
-  let data = await dbUtils.getUserData("todos", req.params.userId);
+  //need to check validation
+  const sort = req.query._sort;
+  console.log("sort: ", sort);
+  let data;
+  if (sort) {
+    data = await dbUtils.getSortedUserData("todos", req.params.userId, sort);
+  } else {
+    data = await dbUtils.getUserData("todos", req.params.userId);
+  }
   if (data) {
     return res.send(data);
   }
   return res.status(404).send("ERROR READING USERS DATA");
 });
+
+// router.get("/:userId", async function (req, res, next) {
+//   let data = await dbUtils.getUserData("todos", req.params.userId);
+//   if (data) {
+//     return res.send(data);
+//   }
+//   return res.status(404).send("ERROR READING USERS DATA");
+// });
 
 router.post("/:userId", async function (req, res, next) {
   const { error } = schema.validate(req.body);
