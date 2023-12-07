@@ -5,14 +5,17 @@ const ChosenPost = ({ currentUser }) => {
   const { postId } = useParams();
   const [commentInput, setCommentInput] = useState("");
   useEffect(() => {
+    getPost();
+  }, [postId]);
+
+  const getPost = async () => {
     fetch(`http://localhost:3000/posts/${postId}`)
       .then((data) => data.json())
       .then((data) => {
         setComments(data);
       })
       .catch(console.error("Error Fetching Post"));
-  }, [postId, comments]);
-
+  };
   const addComment = async (e) => {
     const requestOptions = {
       method: "POST",
@@ -22,16 +25,21 @@ const ChosenPost = ({ currentUser }) => {
         user_id: currentUser.user_id,
       }),
     };
-    let data = await fetch(
-      `http://localhost:3000/comments/${postId}}`,
-      requestOptions
-    );
-    if (!data.ok) {
-      console.error("Error Adding Comment");
-    } else {
-      setCommentInput("");
-      data = await data.json();
-      setComments((prev) => [...prev, data]);
+
+    try {
+      let data = await fetch(
+        `http://localhost:3000/comments/${postId}`,
+        requestOptions
+      );
+
+      if (!data.ok) {
+        console.error("Error Adding Comment");
+      } else {
+        setCommentInput("");
+        getPost();
+      }
+    } catch (error) {
+      console.error("Error Adding Comment:", error);
     }
   };
 
@@ -47,12 +55,12 @@ const ChosenPost = ({ currentUser }) => {
       });
   };
   return (
-    <div>
+    <div className="large-post">
       {
         <>
           <h1>{comments[0]?.post_title}</h1>
           <h2>{comments[0]?.post_content}</h2>
-          <div>
+          <div className="">
             {comments[0]?.comment_id &&
               comments.map((comment) => {
                 return (

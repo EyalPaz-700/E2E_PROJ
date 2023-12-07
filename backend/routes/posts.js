@@ -23,6 +23,7 @@ router.head("/", async function (req, res, next) {
   if (data) {
     console.log(JSON.stringify({ post_count: data[0]["COUNT(*)"] }));
     res.set("post_count", data[0]["COUNT(*)"]);
+    res.setHeader("Access-Control-Expose-Headers", "post_count");
     res.end();
   }
   return res.status(404).end();
