@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate, Link, Outlet } from "react-router-dom";
-
-const Layout = ({ setCurrentUser }) => {
+import "../navbar.css";
+const Layout = ({ currentUser, setCurrentUser }) => {
   const nav = useNavigate();
   function handleLogout() {
     localStorage.removeItem("currUser");
@@ -10,21 +10,22 @@ const Layout = ({ setCurrentUser }) => {
   }
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="./home">Home</Link>
-          </li>
-          <li>
-            <Link to="/posts">Posts</Link>
-          </li>
-          <li>
-            <Link to="./todos">Todos</Link>
-          </li>
-        </ul>
-        <button onClick={handleLogout}>
-          <Link to="/login">log out</Link>
-        </button>
+      <nav className="navbar">
+        <div>
+          <Link to={`users/${currentUser.user_id}/todos`}>Home</Link>
+        </div>
+        <div>
+          <Link to="/posts">Posts</Link>
+        </div>
+        <div>
+          <Link to={`/users/${currentUser.user_id}/todos`}>Todos</Link>
+        </div>
+
+        <div>
+          <Link onClick={handleLogout} to="/login">
+            Logout
+          </Link>
+        </div>
       </nav>
       <Outlet />
     </>

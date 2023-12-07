@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import "./App.css";
 import Login from "./components/Login";
 import Home from "./components/Home";
 import Layout from "./components/Layout";
@@ -17,20 +16,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<Login />} />
         <Route path="/login" element={<Login />} />
         <Route
-          path="/users/:id"
-          element={<Layout setCurrentUser={setCurrentUser} />}
+          element={
+            <Layout currentUser={currentUser} setCurrentUser={setCurrentUser} />
+          }
         >
-          <Route path="home" element={<Home />} />
-          <Route path="todos" element={<Todos />} />
-        </Route>
-        <Route path="posts">
-          <Route index element={<Posts currentUser={currentUser} />} />
-          <Route
-            path=":postId"
-            element={<ChosenPost currentUser={currentUser} />}
-          />
+          <Route path="/users/:id">
+            <Route path="home" element={<Home />} />
+            <Route path="todos" element={<Todos />} />
+          </Route>
+          <Route path="posts">
+            <Route index element={<Posts currentUser={currentUser} />} />
+            <Route
+              path=":postId"
+              element={<ChosenPost currentUser={currentUser} />}
+            />
+          </Route>
         </Route>
       </Routes>
     </BrowserRouter>
