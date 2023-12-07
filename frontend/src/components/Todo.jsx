@@ -65,11 +65,7 @@ const Todo = ({ todo, removeSelf }) => {
     <>
       {clickedEdit ? (
         <>
-          <input
-            value={inputValue}
-            onChange={handleChange}
-            // style={{ width: "50vw", height: "20vh" }}
-          />
+          <input value={inputValue} onChange={handleChange} />
           <br />
           <button onClick={handleSubmitEdit}>submit</button>
           <button onClick={() => setClickedEdit((prev) => !prev)}>
