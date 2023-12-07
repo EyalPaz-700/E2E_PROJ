@@ -1,10 +1,12 @@
 import React from "react";
-import { BrowserRouter, Routes, Route, Link, Outlet } from "react-router-dom";
+import { useNavigate, Link, Outlet } from "react-router-dom";
 
-const Layout = () => {
+const Layout = ({ setCurrentUser }) => {
+  const nav = useNavigate();
   function handleLogout() {
     localStorage.removeItem("currUser");
-    localStorage.setItem("loggedIn", "false");
+    setCurrentUser(undefined);
+    nav("/login");
   }
   return (
     <>
