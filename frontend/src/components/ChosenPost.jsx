@@ -60,13 +60,13 @@ const ChosenPost = ({ currentUser }) => {
         <>
           <h1>{comments[0]?.post_title}</h1>
           <h2>{comments[0]?.post_content}</h2>
-          <div className="">
+          <div className="comments-section">
             {comments[0]?.comment_id &&
               comments.map((comment) => {
                 return (
-                  <div key={comment.comment_id}>
-                    <h4>{comment.username}</h4>
-                    <h5>{comment.comment_content}</h5>
+                  <div className="comment" key={comment.comment_id}>
+                    <h3>{comment.username}</h3>
+                    <h4>{comment.comment_content}</h4>
                     {comment.user_id === currentUser.user_id && (
                       <button onClick={() => removeComment(comment.comment_id)}>
                         Remove Comment
@@ -75,13 +75,15 @@ const ChosenPost = ({ currentUser }) => {
                   </div>
                 );
               })}
+          </div>
+          <footer className="add-comment">
             <input
               type="text"
               value={commentInput}
               onInput={(e) => setCommentInput(e.target.value)}
             />
             <button onClick={addComment}>Add Comment</button>
-          </div>
+          </footer>
         </>
       }
     </div>

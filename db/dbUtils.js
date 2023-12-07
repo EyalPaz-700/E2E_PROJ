@@ -46,7 +46,7 @@ function getTableRange(table, from, to) {
   const sql = `
   SELECT psts.id as post_id, psts.user_id, psts.title, usrs.id as user_id, usrs.username FROM FINAL_PROJ.${table} psts
   JOIN FINAL_PROJ.users  usrs on psts.user_id = usrs.id
-  LIMIT ${to} OFFSET ${from - 1} ;`;
+  LIMIT ${to - from + 1} OFFSET ${from - 1} ;`;
   return executeQuery(sql);
 }
 

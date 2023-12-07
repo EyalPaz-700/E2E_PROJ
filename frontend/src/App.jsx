@@ -6,6 +6,7 @@ import Layout from "./components/Layout";
 import Posts from "./components/Posts";
 import ChosenPost from "./components/ChosenPost";
 import Todos from "./components/Todos";
+import ToDoHistory from "./components/ToDoHistory";
 
 function App() {
   const [currentUser, setCurrentUser] = useState(
@@ -26,6 +27,7 @@ function App() {
           <Route path="/users/:id">
             <Route path="home" element={<Home />} />
             <Route path="todos" element={<Todos />} />
+            <Route path="todos/restore" element={<ToDoHistory />} />
           </Route>
           <Route path="posts">
             <Route index element={<Posts currentUser={currentUser} />} />

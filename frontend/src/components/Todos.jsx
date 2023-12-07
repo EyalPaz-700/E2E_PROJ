@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Todo from "./Todo";
 
 const Todos = () => {
@@ -119,6 +119,7 @@ const Todos = () => {
   return (
     <>
       <h1>todos</h1>
+      <Link to="restore"> Restore Todo's</Link>
       <select onChange={(e) => chooseSortBy(e.target.value)}>
         <option>sort by</option>
         <option value="id">id</option>

@@ -7,8 +7,8 @@ const Posts = ({ currentUser }) => {
   const [addPostToggle, setAddPostToggle] = useState(false);
   const [postCount, setPostCount] = useState(0);
   const [formValues, setFormValues] = useState({
-    title: "Title",
-    content: "Content",
+    title: "",
+    content: "",
   });
 
   async function getPostCount() {
@@ -85,6 +85,7 @@ const Posts = ({ currentUser }) => {
       console.error("Error Adding Post");
     } else {
       data = await data.json();
+      setFormValues({ title: "", content: "" });
       setPosts((prev) => [
         ...prev,
         { ...data, username: currentUser.username },
@@ -94,16 +95,30 @@ const Posts = ({ currentUser }) => {
 
   return (
     <div className="posts">
-      <button onClick={() => setAddPostToggle((prev) => !prev)}>
-        Add Post
-      </button>
-      {addPostToggle && (
-        <>
-          <input onInput={changeFormValue} type="text" name="title" />
-          <input onInput={changeFormValue} type="text" name="content" />
-          <input type="button" onClick={addPost} />
-        </>
-      )}
+      <div className="add-post">
+        <button onClick={() => setAddPostToggle((prev) => !prev)}>
+          Add Post
+        </button>
+        {addPostToggle && (
+          <>
+            <input
+              onInput={changeFormValue}
+              placeholder="Title"
+              type="text"
+              name="title"
+              value={formValues.title}
+            />
+            <input
+              onInput={changeFormValue}
+              placeholder="Content"
+              type="text"
+              name="content"
+              value={formValues.content}
+            />
+            <input type="button" onClick={addPost} value="Submit" />
+          </>
+        )}
+      </div>
       <div className="posts-container">
         {posts.map((post) => (
           <Post
@@ -113,34 +128,36 @@ const Posts = ({ currentUser }) => {
           />
         ))}
       </div>
-      {range.end < postCount && (
-        <button
-          onClick={() => {
-            setRange((prev) => {
-              const copy = { ...prev };
-              copy.start += 5;
-              copy.end += 5;
-              return copy;
-            });
-          }}
-        >
-          Next
-        </button>
-      )}
-      {range.start > 5 && (
-        <button
-          onClick={() => {
-            setRange((prev) => {
-              const copy = { ...prev };
-              copy.start -= 5;
-              copy.end -= 5;
-              return copy;
-            });
-          }}
-        >
-          Previous
-        </button>
-      )}
+      <footer className="button-footer">
+        {range.start > 5 && (
+          <button
+            onClick={() => {
+              setRange((prev) => {
+                const copy = { ...prev };
+                copy.start -= 5;
+                copy.end -= 5;
+                return copy;
+              });
+            }}
+          >
+            Previous
+          </button>
+        )}
+        {range.end < postCount && (
+          <button
+            onClick={() => {
+              setRange((prev) => {
+                const copy = { ...prev };
+                copy.start += 5;
+                copy.end += 5;
+                return copy;
+              });
+            }}
+          >
+            Next
+          </button>
+        )}
+      </footer>
     </div>
   );
 };
